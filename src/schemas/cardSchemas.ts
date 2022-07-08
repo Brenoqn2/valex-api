@@ -8,4 +8,16 @@ const createSchema = joi.object({
   employeeId: joi.number().required(),
 });
 
-export { createSchema };
+const activateSchema = joi.object({
+  cvc: joi
+    .string()
+    .pattern(/^[0-9]{3}$/)
+    .required(),
+  password: joi
+    .string()
+    .pattern(/^[0-9]{4}$/)
+    .required(),
+  cardId: joi.number().required(),
+});
+
+export { createSchema, activateSchema };

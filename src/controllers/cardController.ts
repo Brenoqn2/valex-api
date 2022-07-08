@@ -8,4 +8,10 @@ async function createCard(req: Request, res: Response) {
   res.status(201).send("Created!");
 }
 
-export { createCard };
+async function activateCard(req: Request, res: Response) {
+  const { cardId, cvc, password } = req.body;
+  await cardServices.activateCard(cardId, cvc, password);
+  res.status(200).send("Activated!");
+}
+
+export { createCard, activateCard };

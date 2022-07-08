@@ -6,6 +6,8 @@ import Cryptr from "cryptr";
 import dotenv from "dotenv";
 dotenv.config();
 const cryptr = new Cryptr(process.env.CRYPTR_KEY);
+import customParseFormat from "dayjs/plugin/customParseFormat.js";
+dayjs.extend(customParseFormat);
 
 function generateName(name: string) {
   let splittedName = name.split(" ");
@@ -50,4 +52,14 @@ function generateCard(
   return cardData;
 }
 
-export { generateCard };
+function checkExpirationDate(date: string) {
+  const expirationDate = dayjs(date, "MM/YY");
+  const now = dayjs();
+  return expirationDate.isAfter(now);
+}
+
+function checkCVC(encryptedCVC: string, cvc: string) {
+  return cryptr.decrypt(encryptedCVC) === cvc;
+}
+
+export { generateCard, checkExpirationDate, checkCVC };

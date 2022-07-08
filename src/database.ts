@@ -10,7 +10,7 @@ export const connection = new Pool({
 connection.query("SELECT NOW()", (err, res) => {
   res
     ? console.log(
-        `connect to database ${process.env.DATABASE_NAME} sucessfully`
+        `connect to database ${process.env.DATABASE_NAME} successfully`
       )
     : console.log(
         `failed to connect to database ${process.env.DATABASE_NAME}: ${err}`
