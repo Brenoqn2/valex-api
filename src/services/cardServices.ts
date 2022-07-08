@@ -57,4 +57,30 @@ async function activateCard(cardId: number, cvc: string, password: string) {
   });
 }
 
-export { createCard, activateCard };
+async function listCards(employeeId: number, passwords: Array<string>) {
+  const cards = await cardRepository.findActiveCardsByEmployeeId(employeeId);
+  if (!cards) {
+    throw {
+      type: "error_not_found",
+      message: "This employee does not exist or does not have availabe cards",
+    };
+  }
+  const matchedCards = cards.filter((card) => {
+    if (cardUtils.checkPasswordMatch(card.password, passwords)) {
+      return true;
+    }
+  });
+
+  const result = matchedCards.map((card) => {
+    return {
+      number: card.number,
+      cardholderName: card.cardholderName,
+      expirationDate: card.expirationDate,
+      securityCode: cardUtils.decrypt(card.securityCode),
+    };
+  });
+
+  return result;
+}
+
+export { createCard, activateCard, listCards };

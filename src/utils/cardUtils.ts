@@ -8,6 +8,7 @@ dotenv.config();
 const cryptr = new Cryptr(process.env.CRYPTR_KEY);
 import customParseFormat from "dayjs/plugin/customParseFormat.js";
 dayjs.extend(customParseFormat);
+import bcrypt from "bcrypt";
 
 function generateName(name: string) {
   let splittedName = name.split(" ");
@@ -62,4 +63,24 @@ function checkCVC(encryptedCVC: string, cvc: string) {
   return cryptr.decrypt(encryptedCVC) === cvc;
 }
 
-export { generateCard, checkExpirationDate, checkCVC };
+function checkPasswordMatch(
+  encryptedPassword: string,
+  passwords: Array<string>
+): boolean {
+  const match = (password: string) =>
+    bcrypt.compareSync(password, encryptedPassword);
+  return passwords.some(match);
+}
+
+function decrypt(encrypted: string) {
+  const decrypted = cryptr.decrypt(encrypted);
+  return decrypted;
+}
+
+export {
+  generateCard,
+  checkExpirationDate,
+  checkCVC,
+  checkPasswordMatch,
+  decrypt,
+};

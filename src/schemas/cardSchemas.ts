@@ -20,4 +20,18 @@ const activateSchema = joi.object({
   cardId: joi.number().required(),
 });
 
-export { createSchema, activateSchema };
+const listSchema = joi.object({
+  employeeId: joi.number().required(),
+  passwords: joi
+    .array()
+    .max(5)
+    .items(
+      joi
+        .string()
+        .pattern(/^[0-9]{4}$/)
+        .required()
+    )
+    .required(),
+});
+
+export { createSchema, activateSchema, listSchema };

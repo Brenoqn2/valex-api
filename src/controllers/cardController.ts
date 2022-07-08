@@ -14,4 +14,10 @@ async function activateCard(req: Request, res: Response) {
   res.status(200).send("Activated!");
 }
 
-export { createCard, activateCard };
+async function listCards(req: Request, res: Response) {
+  const { employeeId, passwords } = req.body;
+  const cards = await cardServices.listCards(employeeId, passwords);
+  res.status(200).send({ cards: cards });
+}
+
+export { createCard, activateCard, listCards };

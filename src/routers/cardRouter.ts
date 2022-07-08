@@ -1,8 +1,16 @@
 import { Router } from "express";
-import { createCard, activateCard } from "../controllers/cardController.js";
+import {
+  createCard,
+  activateCard,
+  listCards,
+} from "../controllers/cardController.js";
 import { apiKeyMiddleware } from "../middlewares/authMiddleware.js";
 import validateSchemaMiddleware from "../middlewares/schemasMiddleware.js";
-import { createSchema, activateSchema } from "../schemas/cardSchemas.js";
+import {
+  createSchema,
+  activateSchema,
+  listSchema,
+} from "../schemas/cardSchemas.js";
 
 const cardRouter = Router();
 cardRouter.post(
@@ -16,5 +24,6 @@ cardRouter.post(
   validateSchemaMiddleware(activateSchema),
   activateCard
 );
+cardRouter.post("/card/list", validateSchemaMiddleware(listSchema), listCards);
 
 export default cardRouter;
