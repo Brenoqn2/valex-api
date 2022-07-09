@@ -83,4 +83,30 @@ async function listCards(employeeId: number, passwords: Array<string>) {
   return result;
 }
 
-export { createCard, activateCard, listCards };
+async function blockCard(cardId: number, password: string) {
+  const card = await cardRepository.findById(cardId);
+  if (!card) {
+    throw { type: "error_not_found", message: "Card not found" };
+  }
+
+  if (card.isBlocked) {
+    throw {
+      type: "error_conflict",
+      message: "Card already blocked or not activated",
+    };
+  }
+
+  if (!cardUtils.checkExpirationDate(card.expirationDate)) {
+    throw { type: "error_expired", message: "Card expired" };
+  }
+
+  if (!cardUtils.checkPasswordMatch(card.password, [password])) {
+    throw { type: "error_unauthorized", message: "Password is invalid" };
+  }
+
+  await cardRepository.update(cardId, {
+    isBlocked: true,
+  });
+}
+
+export { createCard, activateCard, listCards, blockCard };

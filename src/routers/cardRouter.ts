@@ -3,6 +3,7 @@ import {
   createCard,
   activateCard,
   listCards,
+  blockCard,
 } from "../controllers/cardController.js";
 import { apiKeyMiddleware } from "../middlewares/authMiddleware.js";
 import validateSchemaMiddleware from "../middlewares/schemasMiddleware.js";
@@ -10,6 +11,7 @@ import {
   createSchema,
   activateSchema,
   listSchema,
+  blockSchema,
 } from "../schemas/cardSchemas.js";
 
 const cardRouter = Router();
@@ -25,5 +27,10 @@ cardRouter.post(
   activateCard
 );
 cardRouter.post("/card/list", validateSchemaMiddleware(listSchema), listCards);
+cardRouter.post(
+  "/card/block",
+  validateSchemaMiddleware(blockSchema),
+  blockCard
+);
 
 export default cardRouter;

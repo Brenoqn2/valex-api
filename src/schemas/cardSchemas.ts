@@ -34,4 +34,12 @@ const listSchema = joi.object({
     .required(),
 });
 
-export { createSchema, activateSchema, listSchema };
+const blockSchema = joi.object({
+  cardId: joi.number().required(),
+  password: joi
+    .string()
+    .pattern(/^[0-9]{4}$/)
+    .required(),
+});
+
+export { createSchema, activateSchema, listSchema, blockSchema };
