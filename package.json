@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node ./src/app.ts",
+    "build": "tsc",
+    "start": "node ./src/app.ts",
     "dev": "nodemon ./src/app.ts"
   },
   "keywords": [],
@@ -24,7 +25,8 @@
     "joi": "^17.6.0",
     "nodemon": "^2.0.19",
     "pg": "^8.7.3",
-    "ts-node": "^10.8.2"
+    "ts-node": "^10.8.2",
+    "tsc": "^2.0.4"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
