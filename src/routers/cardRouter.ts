@@ -3,6 +3,7 @@ import {
   createCard,
   activateCard,
   listCards,
+  getTransactions,
   blockCard,
   unBlockCard,
 } from "../controllers/cardController.js";
@@ -27,6 +28,7 @@ cardRouter.post(
   validateSchemaMiddleware(activateSchema),
   activateCard
 );
+cardRouter.get("/card/transactions/:cardId", getTransactions);
 cardRouter.post("/card/list", validateSchemaMiddleware(listSchema), listCards);
 cardRouter.post(
   "/card/block",

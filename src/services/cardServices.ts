@@ -3,6 +3,9 @@ import * as cardRepository from "../repositories/cardRepository.js";
 import * as employeeRepository from "../repositories/employeeRepository.js";
 import * as cardUtils from "../utils/cardUtils.js";
 import bcrypt from "bcrypt";
+import * as paymentRepository from "../repositories/paymentRepository.js";
+import * as paymentUtils from "../utils/paymentUtils.js";
+import * as rechargeRepository from "../repositories/rechargeRepository.js";
 
 async function createCard(
   apiKey: any,
@@ -83,6 +86,23 @@ async function listCards(employeeId: number, passwords: Array<string>) {
   return result;
 }
 
+async function getTransactions(cardId: number) {
+  const card = await cardRepository.findById(cardId);
+  if (!card) {
+    throw { type: "error_not_found", message: "Card not found" };
+  }
+
+  if (!cardUtils.checkExpirationDate(card.expirationDate)) {
+    throw { type: "error_expired", message: "Card expired" };
+  }
+
+  const transactions = await paymentRepository.findByCardId(cardId);
+  const balance = await paymentUtils.getCardBalance(cardId);
+  const recharges = await rechargeRepository.findByCardId(cardId);
+
+  return { balance, transactions, recharges };
+}
+
 async function blockCard(cardId: number, password: string) {
   const card = await cardRepository.findById(cardId);
   if (!card) {
@@ -135,4 +155,11 @@ async function unBlockCard(cardId: number, password: string) {
   });
 }
 
-export { createCard, activateCard, listCards, blockCard, unBlockCard };
+export {
+  createCard,
+  activateCard,
+  listCards,
+  getTransactions,
+  blockCard,
+  unBlockCard,
+};

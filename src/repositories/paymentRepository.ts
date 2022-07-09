@@ -13,8 +13,7 @@ export type PaymentInsertData = Omit<Payment, "id" | "timestamp">;
 export async function findByCardId(cardId: number) {
   const result = await connection.query<PaymentWithBusinessName, [number]>(
     `SELECT 
-      payments.*,
-      businesses.name as "businessName"
+      payments.id, payments."cardId", payments."businessId", to_char(payments.timestamp::timestamp::date, 'DD/MM/YYYY') as timestamp, payments.amount, businesses.name as businessName
      FROM payments 
       JOIN businesses ON businesses.id=payments."businessId"
      WHERE "cardId"=$1

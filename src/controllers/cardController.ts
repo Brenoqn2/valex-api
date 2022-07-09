@@ -20,6 +20,12 @@ async function listCards(req: Request, res: Response) {
   res.status(200).send({ cards: cards });
 }
 
+async function getTransactions(req: Request, res: Response) {
+  const { cardId } = req.params;
+  const transactions = await cardServices.getTransactions(Number(cardId));
+  res.status(200).send(transactions);
+}
+
 async function blockCard(req: Request, res: Response) {
   const { cardId, password } = req.body;
   await cardServices.blockCard(cardId, password);
@@ -32,4 +38,11 @@ async function unBlockCard(req: Request, res: Response) {
   res.status(200).send("Unblocked!");
 }
 
-export { createCard, activateCard, listCards, blockCard, unBlockCard };
+export {
+  createCard,
+  activateCard,
+  listCards,
+  getTransactions,
+  blockCard,
+  unBlockCard,
+};
