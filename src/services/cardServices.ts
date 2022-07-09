@@ -61,6 +61,10 @@ async function activateCard(cardId: number, cvc: string, password: string) {
 }
 
 async function listCards(employeeId: number, passwords: Array<string>) {
+  const employee = await employeeRepository.findById(employeeId);
+  if (!employee) {
+    throw { type: "error_not_found", message: "Employee not found" };
+  }
   const cards = await cardRepository.findActiveCardsByEmployeeId(employeeId);
   if (!cards) {
     throw {
