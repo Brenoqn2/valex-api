@@ -9,7 +9,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
+    "build": "npx tsc",
     "start": "node ./src/app.ts",
     "dev": "nodemon ./src/app.ts"
   },
