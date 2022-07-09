@@ -109,4 +109,30 @@ async function blockCard(cardId: number, password: string) {
   });
 }
 
-export { createCard, activateCard, listCards, blockCard };
+async function unBlockCard(cardId: number, password: string) {
+  const card = await cardRepository.findById(cardId);
+  if (!card) {
+    throw { type: "error_not_found", message: "Card not found" };
+  }
+
+  if (!card.isBlocked || !card.password) {
+    throw {
+      type: "error_conflict",
+      message: "Card already unblocked or not activated",
+    };
+  }
+
+  if (!cardUtils.checkExpirationDate(card.expirationDate)) {
+    throw { type: "error_expired", message: "Card expired" };
+  }
+
+  if (!cardUtils.checkPasswordMatch(card.password, [password])) {
+    throw { type: "error_unauthorized", message: "Password is invalid" };
+  }
+
+  await cardRepository.update(cardId, {
+    isBlocked: false,
+  });
+}
+
+export { createCard, activateCard, listCards, blockCard, unBlockCard };

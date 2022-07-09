@@ -26,4 +26,10 @@ async function blockCard(req: Request, res: Response) {
   res.status(200).send("Blocked!");
 }
 
-export { createCard, activateCard, listCards, blockCard };
+async function unBlockCard(req: Request, res: Response) {
+  const { cardId, password } = req.body;
+  await cardServices.unBlockCard(cardId, password);
+  res.status(200).send("Unblocked!");
+}
+
+export { createCard, activateCard, listCards, blockCard, unBlockCard };

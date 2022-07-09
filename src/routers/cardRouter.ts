@@ -4,6 +4,7 @@ import {
   activateCard,
   listCards,
   blockCard,
+  unBlockCard,
 } from "../controllers/cardController.js";
 import { apiKeyMiddleware } from "../middlewares/authMiddleware.js";
 import validateSchemaMiddleware from "../middlewares/schemasMiddleware.js";
@@ -31,6 +32,11 @@ cardRouter.post(
   "/card/block",
   validateSchemaMiddleware(blockSchema),
   blockCard
+);
+cardRouter.post(
+  "/card/unblock",
+  validateSchemaMiddleware(blockSchema),
+  unBlockCard
 );
 
 export default cardRouter;
