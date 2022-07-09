@@ -6,12 +6,14 @@ dotenv.config();
 import errorsHandler from "./middlewares/errorsHandler.js";
 import cardRouter from "./routers/cardRouter.js";
 import rechargeRouter from "./routers/rechargeRouter.js";
+import paymentRouter from "./routers/paymentRouter.js";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(cardRouter);
 app.use(rechargeRouter);
+app.use(paymentRouter);
 app.use(errorsHandler);
 
 app.listen(process.env.PORT, () => {
