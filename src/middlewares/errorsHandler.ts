@@ -12,6 +12,7 @@ const errorsHandler: ErrorRequestHandler = (err, req, res, next) => {
     return res.status(401).send(err.message);
   if (err.type === "error_expired") return res.status(410).send(err.message);
   console.log(err);
+  if (err.type === "error_forbidden") return res.status(403).send(err.message);
   res.status(500).send("Something went wrong");
 
   next(err);
