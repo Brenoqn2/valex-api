@@ -89,24 +89,8 @@ API:
         "amount":"30"
     }
 
-- GET /usuarios (autenticada)
-    - Rota para listar todos os usuários
-    - headers: { "Authorization": "Bearer $token" }
-    - body: {}
-- GET /usuarios/:id (autenticada)
-    - Rota para listar um usuário pelo id
-    - headers: { "Authorization": "Bearer $token" }
-    - body: {}
-- PUT /usuarios/:id (autenticada)
-    - Rota para atualizar um usuário pelo id
-    - headers: { "Authorization": "Bearer $token" }
-    - body: {
-        "nome": "Lorem ipsum2",
-        "email": "lorem2@gmail.com",
-        "senha": "loremipsum2"
-    }
-- DELETE /usuarios/:id (autenticada)
-    - Rota para deletar um usuário pelo id
-    - headers: { "Authorization": "Bearer $token" }
+- GET /card/transactions/:cardId
+    - Route to get all transactions from a card
+    - headers: {}
     - body: {}
 ```
